@@ -5,7 +5,6 @@ test = False
 
 
 class Array:
-
     full_array = None
 
     def plot(self):
@@ -30,7 +29,10 @@ class Array:
     def swap(self, index1, index2):
         self.values[index2], self.values[index1] = self.values[index1], self.values[index2]
         Array.full_array[self.lower_index + index2], Array.full_array[self.lower_index +
-                                                                      index1] = Array.full_array[self.lower_index + index1], Array.full_array[self.lower_index + index2]
+                                                                      index1] = Array.full_array[
+                                                                                    self.lower_index + index1], \
+                                                                                Array.full_array[
+                                                                                    self.lower_index + index2]
         self.plot()
 
     def set(self, index, num):
@@ -212,3 +214,21 @@ def quick_sort(nums):  # n^2
             _quick_sort(items, split_index + 1, high)
 
     _quick_sort(nums, 0, nums.get_len() - 1)
+
+
+def shell_sort(nums):  # n^2
+    # Start with a big gap, then reduce the gap
+    n = nums.get_len()
+    # use floor for proper indexing
+    gap = n // 2
+
+    while gap > 0:
+        for i in range(gap, n):
+            item_to_insert = nums.values[i]
+            j = i
+            while j >= gap and nums.values[j - gap] > item_to_insert:
+                nums.set(j, nums.values[j - gap])
+                j -= gap
+            # Insert the item
+            nums.set(j, item_to_insert)
+        gap //= 2
